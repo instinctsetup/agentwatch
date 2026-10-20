@@ -69,3 +69,16 @@ def test_end_to_end_demo_agent_catches_loop(client):
     assert "Repeated-action loop" in titles
     clean = next(t for t in listing["traces"] if "Price out" in t["task"])
     assert clean["grade"] == "A"
+
+
+def test_malformed_trace_does_not_kill_batch(client):
+    bad = {"id": "bad1", "agent": "a", "task": "t",
+           "spans": [{"id": "s1", "trace_id": "bad1"}]}  # missing kind/name
+    good = {"id": "ok1", "agent": "a", "task": "t", "metadata": {},
+            "started_at": 1.0, "ended_at": 2.0, "latency_ms": 1000,
+            "final_answer": "ans",
+            "totals": {"tokens_in": 1, "tokens_out": 1, "cost_usd": 0.0, "errors": 0},
+            "spans": []}
+    r = client.post("/api/traces", json={"traces": [bad, good]})
+    assert r.status_code == 200
+    assert r.json()["accepted"] == 1

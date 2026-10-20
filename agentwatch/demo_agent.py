@@ -93,15 +93,20 @@ SCENARIOS = [
 ]
 
 
+_last_tracer_fell_back = False
+
+
 def run_scenarios(server_url="http://localhost:8000"):
+    global _last_tracer_fell_back
     tracer = Tracer("demo-agent", server_url=server_url, flush_interval=0.2)
     for task, plan in SCENARIOS:
         DemoAgent(tracer).run(task, plan)
     tracer.close()
+    _last_tracer_fell_back = tracer.fell_back
     return len(SCENARIOS)
 
 
 if __name__ == "__main__":
     import sys
     n = run_scenarios(sys.argv[1] if len(sys.argv) > 1 else "http://localhost:8000")
-    print(f"sent {n} scenario traces" + (" (fell back to file)" if False else ""))
+    print(f"sent {n} scenario traces" + (" (fell back to file)" if _last_tracer_fell_back else ""))

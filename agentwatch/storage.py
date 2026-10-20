@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import time
 import sqlite3
 import threading
 
@@ -83,14 +84,14 @@ class Store:
             self.db.execute(
                 """INSERT OR REPLACE INTO traces
                    (id, agent, task, metadata, started_at, ended_at, latency_ms,
-                    final_answer, tokens_in, tokens_out, cost_usd, errors)
-                   VALUES (?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    final_answer, tokens_in, tokens_out, cost_usd, errors, received_at)
+                   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                 (trace["id"], trace["agent"], trace["task"],
                  json.dumps(trace.get("metadata") or {}), trace["started_at"],
                  trace.get("ended_at"), trace.get("latency_ms"),
                  trace.get("final_answer", ""), totals.get("tokens_in", 0),
                  totals.get("tokens_out", 0), totals.get("cost_usd", 0.0),
-                 totals.get("errors", 0)))
+                 totals.get("errors", 0), time.time()))  # SQL default truncates %f to whole seconds
             for s in spans:
                 self.db.execute(
                     """INSERT OR REPLACE INTO spans
@@ -109,10 +110,11 @@ class Store:
         with self._lock, self.db:
             self.db.execute(
                 """INSERT OR REPLACE INTO evals
-                   (trace_id, grade, score, issues, summary, judge)
-                   VALUES (?,?,?,?,?,?)""",
+                   (trace_id, grade, score, issues, summary, judge, created_at)
+                   VALUES (?,?,?,?,?,?,?)""",
                 (trace_id, card["grade"], card["score"],
-                 json.dumps(card["issues"]), card["summary"], card.get("judge", "rules")))
+                 json.dumps(card["issues"]), card["summary"], card.get("judge", "rules"),
+                 time.time()))
 
     # -- reads ----------------------------------------------------------
 
@@ -123,7 +125,7 @@ class Store:
         if agent:
             sql += " WHERE t.agent = ?"
             args.append(agent)
-        sql += " ORDER BY t.received_at DESC LIMIT ? OFFSET ?"
+        sql += " ORDER BY t.received_at DESC, t.rowid DESC LIMIT ? OFFSET ?"
         args += [limit, offset]
         with self._lock:
             rows = self.db.execute(sql, args).fetchall()

@@ -43,9 +43,12 @@ def create_app(db_path="agentwatch.db"):
         for trace in batch.traces:
             if not trace.get("id") or not trace.get("task"):
                 continue
-            store.insert_trace(dict(trace))
-            card = evals.evaluate(store.get_trace(trace["id"]))
-            store.save_eval(trace["id"], card)
+            try:
+                store.insert_trace(dict(trace))
+                card = evals.evaluate(store.get_trace(trace["id"]))
+                store.save_eval(trace["id"], card)
+            except Exception:
+                continue  # one malformed trace must not 500 the whole batch
             accepted += 1
             await broadcast({"type": "trace", "trace_id": trace["id"],
                              "agent": trace.get("agent"), "task": trace.get("task"),
