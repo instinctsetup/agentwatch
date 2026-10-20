@@ -6,8 +6,8 @@ Built for the agent era: coding agents and task agents fail in quiet, expensive 
 
 ## Demo & report
 
-- **Demo video (Drive):** _link added after upload_
-- **PDF report (Drive):** _link added after upload_
+- **Demo video (Drive):** https://drive.google.com/file/d/1UTssc6zs6BPJ1mIuSG5vKPRrN936X8AE/view
+- **PDF report (Drive):** https://drive.google.com/file/d/15N2vLnuf0iCefZKf6oKf4jXXNwjSF_Vh/view
 - Also in-repo: [`docs/report/REPORT.pdf`](docs/report/REPORT.pdf), [`demo/agentwatch-demo.mp4`](demo/agentwatch-demo.mp4)
 
 ## What it does
