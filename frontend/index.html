@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentWatch - flight recorder for AI agents</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header>
+  <div class="brand">
+    <span class="logo">◉</span>
+    <div>
+      <h1>AgentWatch</h1>
+      <p class="tagline">flight recorder &amp; report card for AI agents</p>
+    </div>
+  </div>
+  <div class="live"><span id="live-dot" class="dot"></span><span id="live-label">connecting…</span></div>
+</header>
+
+<section id="stats" class="stats">
+  <div class="stat"><span class="num" id="s-traces">–</span><span class="lbl">traces</span></div>
+  <div class="stat"><span class="num" id="s-spans">–</span><span class="lbl">steps recorded</span></div>
+  <div class="stat"><span class="num" id="s-cost">–</span><span class="lbl">cost tracked</span></div>
+  <div class="stat"><span class="num" id="s-err">–</span><span class="lbl">step error rate</span></div>
+  <div class="stat"><span class="num" id="s-p95">–</span><span class="lbl">p95 trace latency</span></div>
+  <div class="stat grades" id="s-grades"></div>
+</section>
+
+<main>
+  <section class="panel feed">
+    <h2>Live trace feed</h2>
+    <table>
+      <thead><tr><th>grade</th><th>agent</th><th>task</th><th>steps</th><th>latency</th><th>cost</th><th>when</th></tr></thead>
+      <tbody id="feed-body"><tr><td colspan="7" class="empty">waiting for traces…</td></tr></tbody>
+    </table>
+  </section>
+
+  <section class="panel detail" id="detail">
+    <h2 id="detail-title">Select a trace</h2>
+    <div id="detail-body" class="muted">Click any row in the feed to see the full waterfall and its report card.</div>
+  </section>
+</main>
+<script src="/static/app.js"></script>
+</body>
+</html>

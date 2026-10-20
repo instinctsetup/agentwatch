@@ -1,0 +1,12 @@
+{
+  "measured_at": "2026-10-20 08:11 UTC",
+  "cpu_threads": 2,
+  "sdk_overhead_us_per_span": 3.86,
+  "untraced_call_us": 0.15,
+  "traced_call_us": 4.01,
+  "ingest_spans_total": 1000,
+  "ingest_wall_s": 0.71,
+  "ingest_spans_per_s": 1401,
+  "stats_query_ms": 2.4,
+  "traces_in_stats_query": 200
+}

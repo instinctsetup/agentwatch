@@ -1,0 +1,56 @@
+:root {
+  --bg: #0d1117; --panel: #161b22; --border: #2b333d; --text: #e6edf3;
+  --muted: #8b949e; --accent: #58a6ff; --good: #3fb950; --warn: #d29922;
+  --bad: #f85149; --crit: #ff7b72;
+}
+* { box-sizing: border-box; margin: 0; }
+body { background: var(--bg); color: var(--text); font: 14px/1.5 -apple-system, "Segoe UI", Roboto, sans-serif; padding: 20px; }
+header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+.brand { display: flex; gap: 12px; align-items: center; }
+.logo { font-size: 30px; color: var(--accent); }
+h1 { font-size: 22px; }
+.tagline { color: var(--muted); font-size: 12px; }
+.live { display: flex; gap: 8px; align-items: center; color: var(--muted); font-size: 12px; }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--warn); }
+.dot.on { background: var(--good); box-shadow: 0 0 8px var(--good); }
+.stats { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 18px; }
+.stat { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 4px; }
+.stat .num { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.stat .lbl { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+.grades { flex-direction: row !important; align-items: center; gap: 8px; flex-wrap: wrap; }
+.gchip { border-radius: 6px; padding: 3px 8px; font-weight: 700; font-size: 12px; }
+main { display: grid; grid-template-columns: 5fr 4fr; gap: 16px; }
+.panel { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 16px; min-height: 300px; }
+.panel h2 { font-size: 14px; margin-bottom: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; color: var(--muted); font-weight: 600; padding: 6px 8px; border-bottom: 1px solid var(--border); font-size: 11px; text-transform: uppercase; }
+td { padding: 8px; border-bottom: 1px solid #21262d; }
+tbody tr { cursor: pointer; }
+tbody tr:hover { background: #1c2129; }
+tbody tr.selected { background: #1f2a3a; }
+.empty, .muted { color: var(--muted); }
+.grade { display: inline-block; width: 26px; text-align: center; border-radius: 6px; padding: 2px 0; font-weight: 700; }
+.g-A { background: #12361b; color: var(--good); } .g-B { background: #14301d; color: #7ee787; }
+.g-C { background: #3a2f10; color: var(--warn); } .g-D { background: #3d2110; color: #ffa657; }
+.g-F { background: #3d1416; color: var(--crit); }
+.waterfall { margin: 12px 0; }
+.wf-row { display: grid; grid-template-columns: 150px 1fr 70px; gap: 8px; align-items: center; padding: 4px 0; font-size: 12px; }
+.wf-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wf-name .kind { color: var(--muted); margin-right: 6px; font-size: 10px; text-transform: uppercase; }
+.wf-bar-wrap { background: #0d1117; border-radius: 4px; height: 16px; position: relative; }
+.wf-bar { height: 100%; border-radius: 4px; background: var(--accent); min-width: 2px; position: absolute; }
+.wf-bar.error { background: var(--bad); }
+.wf-bar.llm { background: #bc8cff; } .wf-bar.tool { background: var(--accent); }
+.wf-bar.decision { background: #3fb95099; }
+.wf-ms { text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+.card { border: 1px solid var(--border); border-radius: 10px; padding: 14px; margin-top: 14px; background: #10151c; }
+.card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.card-head .grade { width: 34px; padding: 6px 0; font-size: 16px; }
+.card .summary { color: var(--muted); font-size: 13px; }
+.issue { border-left: 3px solid var(--warn); padding: 8px 10px; margin-top: 8px; background: #161b22; border-radius: 0 6px 6px 0; font-size: 13px; }
+.issue.critical { border-color: var(--crit); } .issue.major { border-color: var(--bad); }
+.issue b { display: block; }
+.issue span { color: var(--muted); }
+.answer { margin-top: 12px; padding: 10px; background: #0d1117; border-radius: 6px; font-size: 13px; white-space: pre-wrap; }
+.answer b { color: var(--muted); font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+@media (max-width: 900px) { main { grid-template-columns: 1fr; } .stats { grid-template-columns: repeat(3, 1fr); } }
